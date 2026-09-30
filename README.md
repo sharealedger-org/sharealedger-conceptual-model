@@ -62,11 +62,12 @@ Record unresolved choices and rationale in version-controlled decision notes. Do
 ## Repository Layout
 
 - `presentations/` — attributed historical talks and source material.
+- `GenevaERS/` — GenevaERS-related conceptual proposals and implementation mappings.
 - `model/` — conceptual entities, relationships, invariants, and diagrams to be developed.
 - `examples/` — worked business scenarios and perspective comparisons.
 - `decisions/` — open questions, alternatives, and accepted model decisions.
 
-The initial repository starts with this README and the 2020 lecture deck. The model, examples, and decisions directories will be added as community work is ready; their absence is not a claim that the content is complete.
+The initial repository starts with this README, the GenevaERS discussion starter, and the 2020 lecture deck. The model, examples, and decisions directories will be added as community work is ready; their absence is not a claim that the content is complete. The GenevaERS material is exploratory and does not imply GenevaERS endorsement.
 
 ## Licensing
 
