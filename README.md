@@ -35,9 +35,28 @@ A proposal should say which layer it changes and show the mapping to adjacent la
 
 ## Historical Starting Point
 
+## Current Working Documents
+
+- [Sharealedger Vision](SHAREALEDGER-VISION.md) — purpose and long-term direction.
+- [Open Accounting Model Brief](model/open-accounting-model-brief.md) — branches of work,
+  first conformance target, and development sequence.
+- [Open Accounting Framework](model/open-accounting-framework.md) — working vocabulary,
+  invariants, perspectives, and logical questions.
+- [Practical Implementation Roadmap](model/practical-implementation-roadmap.md) — the path
+    from concepts to schemas, data, code, and tests.
+- [VA source workbook](model/source/VA%20Data%20Samples%20and%20Specs.xlsx) — historical VA data,
+  journal, chart, reference-data, and report-model source material.
+- [Sanitized personal-finance example](model/examples/personal-finance-sanitized/README.md) —
+    contributed research fixture; publication review remains required.
+
 [presentations/MSU%20edu%20KMT%20Guest%20Lecture%20Slides%20Apr%202020.pdf](presentations/MSU%20edu%20KMT%20Guest%20Lecture%20Slides%20Apr%202020.pdf) is a historical starting point for the model discussion. The April 2020 guest lecture connects REA, FTP/Universal Ledger prototypes, event duality, Contract/Commitment/Resource concepts, CKB-oriented physical groupings, and shared/private ledger partitioning. It is source material for discussion, not a current approved model specification.
 
 The deck was created by Kip Twitchell for a guest lecture to Dr. William E. McCarthy's students at Michigan State University and contributed to Sharealedger with IBM authorization. Original slide attributions and notices remain in the deck. The accompanying conceptual materials in this repository follow Sharealedger's business-content licensing policy.
+
+`presentations/McCarthyReportSubtitles.txt` is the transcript of the dialogue conducted over the
+MSU slide deck. It is a partial conversation, not a complete narration or standalone specification;
+the slides remain the structural source and the transcript supplies discussion and interpretation
+only for the portions that were covered.
 
 ## Context and Related Work
 
