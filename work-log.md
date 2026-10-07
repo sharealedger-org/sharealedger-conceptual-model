@@ -7,6 +7,28 @@ cross-cutting concerns.
 
 ---
 
+## Session: 2025 — Repo Restructure + Confidentiality Fixes
+
+### Work completed this session
+
+**conceptual-model repo:**
+- Restructured into three-layer architecture: `sources/`, `framework/`, `projects/`
+- All files moved, new project stubs created (ledger-lab), STARTUP.md added, README rewritten
+- Committed: `restructure: sources / framework / projects three-layer architecture`
+
+**members repo:**
+- E205, E206, E210, E211, E220, E221 transcript titles renamed from HSBC to
+  "Global Financial Institution POC" series
+- Topical_Index.md committed (had been created last session but not committed)
+- Committed in two commits: rename/add new files, then remove old HSBC files
+
+**ledgerlearning repo:**
+- README.md updated (CwK episode count 250+ → 330+, expanded description, CwK corpus section)
+- **NOT YET COMMITTED** — Dropbox sync was interfering; commit manually:
+  `git add README.md && git commit -m "README: update CwK episode count and description; add CwK corpus section"`
+
+---
+
 ## Session: 2025 — Repo Restructure (sources / framework / projects)
 
 ### Work completed this session
