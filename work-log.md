@@ -94,55 +94,127 @@ cross-cutting concerns.
   topical index bridging E-number corpus to conceptual model documents
 
 ---
+## Session: 2025 — Shared Storage project split
+
+### Work completed this session
+
+- `projects/shared-storage/` created as a new peer project:
+  - `README.md` — provider-independent charter; IBM Cloud as first prototype instance, not
+    normative; scope boundary and relationship table for hospice, ledger-lab, and framework
+  - `shared-storage-infrastructure.md` — moved from `projects/hospiceapp/`; cross-references
+    updated to new paths for `sources/` and `projects/hospiceapp/`
+  - `todo.md` — HIGH: interface contract formalization, provider registration model, IBM Cloud
+    prototype plan; MEDIUM: authorization rule language, portability acceptance test,
+    generalization analysis
+  - `log.md` — initial state recorded
+- `projects/hospiceapp/shared-storage-infrastructure.md` removed
+- `projects/hospiceapp/README.md` Infrastructure note updated — now references
+  `projects/shared-storage/`; hospice-specific constraints (HIPAA BAA, consumer identity,
+  synthetic data) remain in the hospice project
+- `projects/hospiceapp/todo.md` trimmed — cross-cutting infrastructure items moved to
+  shared-storage; hospice retains FHIR mapping, HIPAA BAA decision, consumer identity model,
+  conformance fixtures, and synthetic dataset definition
+- `STARTUP.md` and top-level `README.md` updated to register new project
+
+---
+
+---
+
+## Session: 2025 — Hospice prototype architecture and technology stack
+
+### Work completed this session (hospiceapp project)
+
+- **FHIR as field-level data model** — decided that FHIR R4/R5 resource fields are the
+  hospice app field-level data model for covered event types. No parallel schema. Six gap
+  event types require purpose-designed fields informed by FHIR extension patterns. Three
+  structural gaps (shared/private partition, open commitment, administration-implies-delivery)
+  are server-enforced rules, not FHIR concepts.
+
+- **Prototype architecture decided** — modeled on RSC demo (VAPostAnalysisRSCDemo, cloned
+  for reference). Server holds all state and enforces all rules. Clients are role-specific
+  thin interfaces. Storage is server-side only. RSC's named-pipe transport → HTTPS REST.
+  RSC's terminal UI → PWA served from same server. Terminal simulation mode preserved for
+  development and demos.
+
+- **Technology stack decided:**
+  - Server: Node.js + Express
+  - Client: PWA (no app install; URL or QR code; any smartphone browser)
+  - Storage: Dropbox API v2 first instance; OneDrive second candidate; pluggable
+  - Dependencies: `express`, `dropbox`, `dotenv` only to start
+  - Onboarding: care coordinator provisions phone/email; participant receives URL; no OAuth
+
+- **IBM Cloud de-prioritized** — Dropbox/OneDrive sufficient for synthetic-data prototype
+  and more directly demonstrate portability claim. IBM Cloud relevant only if HIPAA-eligible
+  deployment required.
+
+- **SMS transport evaluated and deferred** — SMS rejected for hospice prototype (smartphone
+  users; reliability/cost/length constraints). Thin-client *principle* preserved in PWA
+  design. SMS/USSD/WhatsApp for financial inclusion recorded as a separate design thread.
+
+- **RSC repo cloned** to `/tmp/VAPostAnalysisRSCDemo` for reference during architecture
+  discussion. Not committed anywhere; re-clone from
+  `https://github.com/sharealedger-org/VAPostAnalysisRSCDemo.git` as needed.
+
+- **`projects/hospiceapp/log.md`** updated with full session record.
+- **`projects/hospiceapp/todo.md`** rewritten to reflect new priorities and stack decisions.
+
+### Documents needed before prototype coding begins
+
+1. `projects/hospiceapp/data-model.md` — field-level spec; next session
+2. `projects/shared-storage/interface-contract.md` — OpenAPI/AsyncAPI for 8 operations
+3. `sharealedger-hospice` repo scaffold on GitHub
+
+---
 
 ## Open Work Items for Next Session(s)
 
-### HIGH — Required before hospice prototype can be built
+### HIGH — Confidentiality (members repo)
 
-- [x] **E205/E206/E210/E211/E220 titles in members repo** — files were named using a specific
-  institution name (HSBC). Renamed to "Global Financial Institution POC" series:
-  - Transcript files renamed: `E305_`–`E309_` prefixed files in `Transcripts/`
-  - Title lines updated inside each file
-  - Cross-references updated in `README.md`, `Transcript_Sequential_Scan.md`,
-    `Transcript_XLSX_Correlation_ByDate.md`, and `Topical_Index.md`
-  - E221 (Kolkata Part 2, no file downloaded) title updated in index files
-  - Note: the work log previously cited E305–E309 E-numbers; the actual E-numbers for
-    these POC episodes are E205, E206, E210, E211, E220, E221
+- [x] **E205/E206/E210/E211/E220 titles in members repo** — renamed to "Global Financial
+  Institution POC" series; all file names, title lines, and cross-references updated.
 
 - [ ] **E271 transcript body** — contains a specific institution name in the body text
   (not just location metadata). Review and redact or generalize as appropriate.
   File: `members/content/conversations-with-kip/Transcripts/E271_Data_Quality_and_People_qTf886PKgkw.md`
 
-- [ ] **Full corpus scan for confidential institution names** — a systematic grep across
-  all transcript files in `members/content/conversations-with-kip/Transcripts/` for
-  known institution names. The E196 fix and the E305–E309/E342 items were identified
-  opportunistically; a full scan is needed to ensure completeness.
+- [ ] **Full corpus scan for confidential institution names** — systematic grep across all
+  transcript files. E196 and E205–E221 were found opportunistically; a full scan is needed.
 
-- [ ] **FHIR mapping decision record** (`decisions/fhir-mapping.md`) — current status is
-  stub. Needs:
-  1. Validation of each mapping row against FHIR R4/R5 specs
-  2. FHIR profiles or extensions for the six gap event types
-  3. Shared/private partition representation in FHIR consent/access control
-  4. Three structural gap handling specifications
-  5. Test against a reference FHIR server (HAPI FHIR) with synthetic hospice data
-  6. Publication as a Sharealedger FHIR Implementation Guide
+### HIGH — Hospice App (`projects/hospiceapp/`)
 
-- [ ] **IBM Cloud prototype plan** — `decisions/shared-storage-infrastructure.md` names
-  IBM Cloud as the prototype target and lists the six-component stack, but no implementation
-  plan exists. A minimum viable prototype spec is needed: which component first, what
-  synthetic data set, what acceptance test, who operates the IBM Cloud account.
+- [ ] **Data model** (`projects/hospiceapp/data-model.md`) — field-level spec for all
+  entities; FHIR fields for covered events; designed fields for 6 gap types; rules for
+  3 structural gaps. **Next session.**
+
+- [ ] **Prototype repo scaffold** — create `sharealedger-hospice` repo on GitHub with
+  directory structure, README, and RSC lineage note. No implementation code yet.
+
+- [ ] **HIPAA BAA decision** — synthetic data sufficient for first iteration; record as
+  decision and confirm no BAA required for Dropbox/OneDrive with synthetic data.
+
+- [ ] **Consumer identity model** — prototype approach decided (URL provisioning); record
+  as a formal decision in the project.
+
+### HIGH — Shared Storage (`projects/shared-storage/`)
+
+- [ ] **Interface contract formalization** — OpenAPI or AsyncAPI for the 8 operations.
+  Dropbox is the first concrete binding. Blocks hospice prototype coding.
+  See `projects/shared-storage/todo.md`.
+
+- [ ] **Provider registration model** — minimum viable manifest format for Arrangement
+  endpoint discovery.
+
+- [ ] **IBM Cloud prototype plan** — lower priority now; relevant only for HIPAA-eligible
+  deployment. Dropbox/OneDrive serve the synthetic-data prototype.
 
 ### MEDIUM — Important for conceptual model completeness
 
-- [ ] **First conformance example data files** — `model/practical-implementation-roadmap.md`
-  calls for plain JSON/CSV fixture files representing parties, agreements, instruments,
-  events, reference data, rules, and expected outputs. None exist yet. The hospice example
-  is a candidate second fixture; the purchase/settlement example from the framework is
-  the first. Ledger Lab owns execution; this repo owns the fixture definitions.
+- [ ] **First conformance example data files** — plain JSON/CSV fixture files for
+  purchase/settlement (first fixture) and hospice (second). Ledger Lab owns execution;
+  this repo owns fixture definitions.
 
-- [ ] **Decision records for open framework questions** — the framework
-  (`model/open-accounting-framework.md`) names several unresolved questions in
-  "Logical representation questions" (§ at end). Each should become a decision record stub:
+- [ ] **Decision records for open framework questions** — framework names several unresolved
+  questions; each should become a decision record stub:
   - Event / Movement / Position as separate record types vs. common lineage model
   - Global vs. scoped identifiers
   - Commitment reciprocity (buyer's and seller's commitments as one shared fact vs. two)
@@ -151,22 +223,9 @@ cross-cutting concerns.
   - Rules declaring dependencies and producing auditable generated events
   - Minimum conformance suite definition
 
-- [ ] **Corpus method for conceptual-model repo** — you asked about applying the corpus
-  navigation method (topical index pointing to original materials) to the conceptual-model
-  repo itself. The repo currently has a flat `decisions/` directory and a flat `model/`
-  directory with no topic-first navigation layer. As the number of documents grows,
-  a topical index or topic map analogous to `Topical_Index.md` in the members repo
-  would help. Define the right structure before the document count grows further.
+- [ ] **Corpus method for conceptual-model repo** — topic-first navigation layer analogous
+  to `Topical_Index.md` in members repo; define structure before document count grows further.
 
-- [ ] **Shared-storage interface contract formalization** — `decisions/shared-storage-infrastructure.md`
-  names eight required operations for the interface contract. These should be formalized
-  in a machine-readable format (OpenAPI or AsyncAPI) before prototype implementation begins.
-  Decision: which format, and where does the spec file live (this repo or Ledger Lab)?
-
-- [ ] **Provider registration model** — `decisions/shared-storage-infrastructure.md` names
-  the provider registration problem (how does an app find the shared partition endpoint
-  for a given Arrangement?) as unresolved. A minimum viable manifest format needs to be
-  defined before the prototype can be built.
 
 ### LOWER — Background / research tasks
 
